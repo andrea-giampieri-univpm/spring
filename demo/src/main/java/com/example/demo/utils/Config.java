@@ -6,17 +6,24 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+/**
+ * Classe per gestire la configurazione dell'applicazione. (per finalità accademiche, poteva essere implementata in application.properties)
+ * 
+ * @author jump
+ *
+ */
 
-public class Config {
+public abstract class Config {
 	
 	private static JSONObject conf;
 	
-	public static String toJson() {
+	public static String toJsonString() {
 		return conf.toString();
 	}
 	
@@ -43,8 +50,15 @@ public class Config {
 		if(conf.containsKey(param)) return conf.get(param); else return null;
 	}
 	
-	public static Object setConf(String param, Object value)  {
-		return conf.put(param, value);
+	public static void setConf(String param, Object value)  {
+		try {
+			HashMap<String,Object> keyvalue = new HashMap<>();
+			keyvalue.put(param, value);
+			conf.putAll(keyvalue);
+		} catch (Exception e ) {
+			System.out.println(e);
+		}
+		
 	}
 	
 	public static Object setConf(String param, Object value, boolean commit)  {

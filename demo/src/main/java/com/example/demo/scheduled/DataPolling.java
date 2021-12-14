@@ -1,9 +1,8 @@
-package com.example.demo.service;
+package com.example.demo.scheduled;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
@@ -15,23 +14,25 @@ import com.example.demo.model.CurrentWeather;
 import com.example.demo.utils.Config;
 
 @Component
-public class DataPolling {
+public class DataPolling implements InterfaceDataPolling {
 	
 	private CurrentWeather cw;
 	private static final Logger log = LoggerFactory.getLogger(DataPolling.class);
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 	@Scheduled(fixedRate = 10000)
 	@Async
-	public void reportCurrentTime() {
+	public void getCurrentWeather() {
 		//@Value("${owm.apikey}")private String owmApiKey; 
-		log.info("Scanning for data: ", dateFormat.format(new Date()));
+		log.info("Scanning for data: ");
 		RestTemplate restTemplate = new RestTemplate();
 		ArrayList<Long> cities = Config.getCities();
 		for(Long city: cities) {
 			this.cw = restTemplate.getForObject("https://api.openweathermap.org/data/2.5/weather?id="+city.longValue()+"&appid="+Config.getConf("owm_apikey")+"&units=metric&lang=it", CurrentWeather.class);
+			JSONObject js = restTemplate.getForObject("https://api.openweathermap.org/data/2.5/weather?id="+city.longValue()+"&appid="+Config.getConf("owm_apikey")+"&units=metric&lang=it", JSONObject.class);
+
+			System.out.println(js);
 			System.out.println(cw);
-			cw.saveToFile();
+			cw.appendToFile();
 		}
 	}
 }

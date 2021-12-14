@@ -1,4 +1,4 @@
-package com.example.model.owm;
+package com.example.demo.model.owm;
 
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OwmCurrentWeather {
+public abstract class OwmCurrentJson {
 	OwmCoord coord;
 	ArrayList<OwmWeather> weather;
 	private String base;

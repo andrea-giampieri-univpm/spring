@@ -1,4 +1,4 @@
-package com.example.model.owm;
+package com.example.demo.model.owm;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

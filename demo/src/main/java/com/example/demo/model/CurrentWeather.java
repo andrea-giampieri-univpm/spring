@@ -5,19 +5,16 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.TimeZone;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import com.example.demo.model.owm.OwmCurrentJson;
 import com.example.demo.utils.Config;
-import com.example.model.owm.OwmCurrentWeather;
 
-public class CurrentWeather extends OwmCurrentWeather {
-
-	public LocalDateTime getFormattedDt() {
-		return LocalDateTime.ofInstant(Instant.ofEpochSecond(super.getDt()), TimeZone.getTimeZone("UTC").toZoneId());
-	}
+public class CurrentWeather extends OwmCurrentJson implements InterfaceDataSave, InterfaceCurrentWeather {
 	
 	public CurrentWeather() {
 		
@@ -36,9 +33,25 @@ public class CurrentWeather extends OwmCurrentWeather {
 		}
 	}
 	
-	public void saveToFile() {
+	public LocalDateTime getFormattedDt() {
+		return LocalDateTime.ofInstant(Instant.ofEpochSecond(super.getDt()), TimeZone.getTimeZone("Europe/Rome").toZoneId());
+	}
+	
+	public double getPressure() {
+		return super.getMain().getPressure();
+	}
+	
+	public double getTemp() {
+		return super.getMain().getTemp();
+	}
+	
+	public void appendToFile() {
 		try {
-			JSONObject jsonobj = new JSONObject();
+			HashMap<String, Object> keyvalue= new HashMap<>();
+			JSONObject jsonobj = new JSONObject(keyvalue);
+			 //implementare con hashmap
+			keyvalue.put("id", this.getId());
+			
 			jsonobj.put("id", this.getId());
 			jsonobj.put("dt", this.getDt());
 			jsonobj.put("temp", this.getMain().getTemp());

@@ -24,9 +24,9 @@ public class ConfigController {
 		return "Greetings from Spring Boot!";
 	}
 	
-	@GetMapping("/status")
+	@GetMapping(value = "/status",produces = "application/json;")
 	public String getStatus() {
-		return Config.toJson();
+		return Config.toJsonString();
 	}
 	
 	@GetMapping("/removemonitoring")

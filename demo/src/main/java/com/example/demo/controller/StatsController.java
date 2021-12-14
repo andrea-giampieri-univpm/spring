@@ -16,4 +16,9 @@ public class StatsController {
 	public String getStatsFiltered(@RequestParam(value = "cityid") String cityId,@RequestParam(value = "from") String from,@RequestParam(value = "to") String to) {
 		return "Greetings from Spring Boot!";
 	}
+	
+	@GetMapping("/getstatsfilteredarr") //statistica con array di id da fare in post
+	public String getStatsFilterfd(@RequestParam(value = "cityid") String cityId,@RequestParam(value = "from") String from,@RequestParam(value = "to") String to) {
+		return "Greetings from Spring Boot!";
+	}
 }

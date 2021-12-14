@@ -14,7 +14,7 @@ import com.example.demo.utils.Config;
  * Instanziare l'oggetto con i parametri (al minimo quelli del costruttore) ed inviare la richiesta.
  * Richiede json simple library.
  */
-public class OwmCurrentRequest {
+public class CurrentRequestLink {
 
 	private final String baseUrl="https://api.openweathermap.org/data/2.5/weather?id={0}&appid={1}";
 	private final String baseLang="&lang={0}";
@@ -33,7 +33,7 @@ public class OwmCurrentRequest {
 	*
 	* @param  id  id città come specificato da <a href="http://bulk.openweathermap.org/sample/"> lista di openwheathermap</a>
 	*/
-	public OwmCurrentRequest(String id) {
+	public CurrentRequestLink(String id) {
 		this.id=id;
 		this.apikey=(String)Config.getConf("apikey");
 		this.apikey=apikey.substring(apikey.length()-5);
